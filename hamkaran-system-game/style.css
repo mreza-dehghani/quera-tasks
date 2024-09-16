@@ -1,0 +1,52 @@
+* {
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+}
+
+th {
+    font-size: larger;
+}
+
+td {
+    font-size: large;
+}
+
+table {
+    width: 90%;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid black;
+}
+
+table tr:nth-child(2n+2) {
+    background: rgb(235, 235, 235);
+}
+
+.team {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.teams {
+    min-width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+}
+
+.status {
+    margin-top: 100px;
+}

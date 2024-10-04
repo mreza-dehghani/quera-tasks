@@ -61,14 +61,14 @@ function sortByKeywords(keywords, products) {
 }
 
 function sort(sortBy, products) {
-    let sortedProducts = []
+    let sortedProducts = [...products]
     for (let sortType of sortBy) {
         if (sortType.field === "price") {
-            const sortedData = sortByPrice(products, sortType.order)
+            const sortedData = sortByPrice(sortedProducts, sortType.order)
             if (sortedData) sortedProducts = [...sortedData];
         }
         if (sortType.field === "name") {
-            const sortedData = sortByName(products, sortType.order)
+            const sortedData = sortByName(sortedProducts, sortType.order)
             if (sortedData) sortedProducts = [...sortedData];
         }
     }
@@ -76,26 +76,45 @@ function sort(sortBy, products) {
     return sortedProducts;
 }
 
+
 function sortByPrice(products, order) {
-    return products.sort((a, b) => order === 'ascending' ? a.price - b.price : b.price - a.price);
-}
-
-function sortByName(products, order) {
     return products.sort((a, b) => {
-
         if (order === 'ascending') {
-            if (a.name < b.name) {
+            if (a.price < b.price) {
                 return -1;
             }
-            if (a.name > b.name) {
+            if (a.price > b.price) {
                 return 1;
             }
             return 0;
         } else {
-            if (a.name < b.name) {
+            if (a.price < b.price) {
                 return 1;
             }
-            if (a.name > b.name) {
+            if (a.price > b.price) {
+                return -1;
+            }
+            return 0;
+        }
+
+    });
+}
+
+function sortByName(products, order) {
+    return products.sort((a, b) => {
+        if (order === 'ascending') {
+            if (a.name.length < b.name.length) {
+                return -1;
+            }
+            if (a.name.length > b.name.length) {
+                return 1;
+            }
+            return 0;
+        } else {
+            if (a.name.length < b.name.length) {
+                return 1;
+            }
+            if (a.name.length > b.name.length) {
                 return -1;
             }
             return 0;
@@ -108,21 +127,23 @@ const products = [
     {id: 1, name: "Apple iPhone 12", category: "Electronics", price: 999},
     {id: 2, name: "Adidas running shoes", category: "Sportswear", price: 280},
     {id: 3, name: "Samsung Galaxy S21", category: "Electronics", price: 850},
-    {id: 4, name: "Nike Air Max", category: "Sportswear", price: 300}
+    {id: 4, name: "Nike Air Max", category: "Sportswear", price: 300},
+    {id: 5, name: "Samsung Galaxy S24", category: "Electronics", price: 1500},
+    {id: 6, name: "Samsung S24", category: "Electronics", price: 1200},
 ];
-
 
 const criteria = {
     categories: ["Electronics"],
-    priceRange: {min: 0, max: 1000},
+    priceRange: {min: 0, max: 2000},
     nameLength: {min: 10, max: 25},
-    keywords: ["Apple", "Galaxy"],
+    keywords: [],
     sortBy: [
-        {field: "price", order: "ascending"},
+        {field: "price", order: "ascending"}, //ascending || descending
         {field: "name", order: "descending"}
     ]
 };
 
-filterAndSortProducts(products, criteria)
+const data = filterAndSortProducts(products, criteria)
+console.log(data);
 
 module.exports = {filterAndSortProducts};
